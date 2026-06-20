@@ -1,0 +1,126 @@
+<UserControl x:Class="PDFMaster.Views.PdfToolsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="0,8,0,0">
+            <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,0,0,16">
+                <StackPanel MaxWidth="820">
+                    <TextBlock x:Name="SplitHint" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" />
+                    <TextBlock x:Name="SplitSourceLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="SplitSourceBox" IsReadOnly="True" />
+                        <Button x:Name="SplitBrowseButton" Grid.Column="1" Margin="8,0,0,0" Content="..." Style="{StaticResource SecondaryButton}" Padding="12,10" Click="SplitBrowseButton_Click" />
+                    </Grid>
+                    <TextBlock x:Name="SplitModeLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <ComboBox x:Name="SplitModeCombo" Margin="0,0,0,12" SelectedIndex="0" />
+                    <TextBlock x:Name="SplitParamLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <TextBox x:Name="SplitParamBox" Margin="0,0,0,12" />
+                    <TextBlock x:Name="SplitOutputLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="SplitOutputBox" />
+                        <Button x:Name="SplitOutputBrowseButton" Grid.Column="1" Margin="8,0,0,0" Content="..." Style="{StaticResource SecondaryButton}" Padding="12,10" Click="SplitOutputBrowseButton_Click" />
+                    </Grid>
+                    <Button x:Name="SplitButton" Content="Split PDF" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left" Click="SplitButton_Click" />
+                    <TextBlock x:Name="SplitResultText" Margin="0,12,0,0" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" />
+                </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,0,0,16">
+                <StackPanel MaxWidth="820">
+                    <TextBlock x:Name="ExtractHint" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" />
+                    <TextBlock x:Name="ExtractSourceLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="ExtractSourceBox" IsReadOnly="True" />
+                        <Button x:Name="ExtractBrowseButton" Grid.Column="1" Margin="8,0,0,0" Content="..." Style="{StaticResource SecondaryButton}" Padding="12,10" Click="ExtractBrowseButton_Click" />
+                    </Grid>
+                    <TextBlock x:Name="ExtractRangeLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <TextBox x:Name="ExtractRangeBox" Margin="0,0,0,12" Tag="1-3" />
+                    <TextBlock x:Name="ExtractOutputLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="ExtractOutputBox" />
+                        <Button x:Name="ExtractOutputBrowseButton" Grid.Column="1" Margin="8,0,0,0" Content="..." Style="{StaticResource SecondaryButton}" Padding="12,10" Click="ExtractOutputBrowseButton_Click" />
+                    </Grid>
+                    <Button x:Name="ExtractButton" Content="Extract pages" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left" Click="ExtractButton_Click" />
+                    <TextBlock x:Name="ExtractResultText" Margin="0,12,0,0" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" />
+                </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,0,0,16">
+                <StackPanel MaxWidth="820">
+                    <TextBlock x:Name="ImagesToPdfHint" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" />
+                    <TextBlock x:Name="ImagesToPdfSourceLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="ImagesToPdfSourceBox" IsReadOnly="True" TextWrapping="Wrap" MinHeight="36" />
+                        <Button x:Name="ImagesToPdfBrowseButton" Grid.Column="1" Margin="8,0,0,0"
+                                Style="{StaticResource SecondaryButton}" Padding="12,10" Click="ImagesToPdfBrowseButton_Click" />
+                    </Grid>
+                    <TextBlock x:Name="ImagesToPdfOutputLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="ImagesToPdfOutputBox" />
+                        <Button x:Name="ImagesToPdfOutputBrowseButton" Grid.Column="1" Margin="8,0,0,0" Content="..." Style="{StaticResource SecondaryButton}" Padding="12,10" Click="ImagesToPdfOutputBrowseButton_Click" />
+                    </Grid>
+                    <Button x:Name="ImagesToPdfButton" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left" Click="ImagesToPdfButton_Click" />
+                    <TextBlock x:Name="ImagesToPdfResultText" Margin="0,12,0,0" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" />
+                </StackPanel>
+            </Border>
+
+            <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1" CornerRadius="14" Padding="16">
+                <StackPanel MaxWidth="820">
+                    <TextBlock x:Name="WatermarkHint" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" />
+                    <TextBlock x:Name="WatermarkSourceLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="WatermarkSourceBox" IsReadOnly="True" />
+                        <Button x:Name="WatermarkBrowseButton" Grid.Column="1" Margin="8,0,0,0" Content="..." Style="{StaticResource SecondaryButton}" Padding="12,10" Click="WatermarkBrowseButton_Click" />
+                    </Grid>
+                    <TextBlock x:Name="WatermarkTextLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <TextBox x:Name="WatermarkTextBox" Margin="0,0,0,12" />
+                    <CheckBox x:Name="WatermarkDiagonalCheck" Content="Diagonal watermark" Margin="0,0,0,12" IsChecked="True" />
+                    <TextBlock x:Name="WatermarkOutputLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="WatermarkOutputBox" />
+                        <Button x:Name="WatermarkOutputBrowseButton" Grid.Column="1" Margin="8,0,0,0" Content="..." Style="{StaticResource SecondaryButton}" Padding="12,10" Click="WatermarkOutputBrowseButton_Click" />
+                    </Grid>
+                    <Button x:Name="WatermarkButton" Content="Apply watermark" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left" Click="WatermarkButton_Click" />
+                    <TextBlock x:Name="WatermarkResultText" Margin="0,12,0,0" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

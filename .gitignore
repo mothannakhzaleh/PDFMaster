@@ -1,0 +1,74 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+publish/
+out/
+artifacts/
+_build_out/
+
+# Visual Studio / Rider
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.rsuser
+.idea/
+*.DotSettings.user
+
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+project.lock.json
+
+# .NET
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.tmp
+*.bak
+*~
+
+!**/*.csproj
+!**/*.sln
+!**/*.slnx
+
+# Test results
+[Tt]est[Rr]esult*/
+coverage/
+
+# OS files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Secrets
+*.env
+.env.*
+secrets.json
+
+# Debug configurations
+**/bin/Debug/
+**/obj/Debug/
+**/bin/x64/Debug/
+**/obj/x64/Debug/
+
+# Bundled tool binaries
+PDFMaster/tools/gswin64c.exe
+**/tools/gswin64c.exe
+
+!PDFMaster/tools/README.txt
+
+# Cursor / agent
+.cursor/
+agent-transcripts/

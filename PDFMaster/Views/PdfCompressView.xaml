@@ -1,0 +1,59 @@
+<UserControl x:Class="PDFMaster.Views.PdfCompressView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+    <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,8,0,0">
+        <StackPanel MaxWidth="760">
+            <TextBlock x:Name="HintText" TextWrapping="Wrap" FontSize="13" LineHeight="20"
+                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,16" />
+
+            <TextBlock x:Name="ModeLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+            <ComboBox x:Name="ModeCombo" Margin="0,0,0,14" SelectionChanged="ModeCombo_SelectionChanged" />
+
+            <TextBlock x:Name="SourceLabel" Text="Source PDF" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+            <Grid Margin="0,0,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="SourcePathBox" IsReadOnly="True" />
+                <Button x:Name="BrowseSourceButton" Grid.Column="1" Content="..." Margin="8,0,0,0"
+                        Style="{StaticResource SecondaryButton}" Padding="12,10" Click="BrowseSourceButton_Click" />
+            </Grid>
+
+            <TextBlock x:Name="BatchFolderLabel" Text="Input folder" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" Visibility="Collapsed" />
+            <Grid x:Name="BatchFolderRow" Margin="0,0,0,14" Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="BatchFolderBox" />
+                <Button x:Name="BrowseBatchButton" Grid.Column="1" Content="..." Margin="8,0,0,0"
+                        Style="{StaticResource SecondaryButton}" Padding="12,10" Click="BrowseBatchButton_Click" />
+            </Grid>
+
+            <TextBlock x:Name="GhostscriptHint" TextWrapping="Wrap" FontSize="12"
+                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" />
+
+            <TextBlock x:Name="OutputLabel" Text="Output folder" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+            <Grid Margin="0,0,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="OutputPathBox" />
+                <Button x:Name="BrowseOutputButton" Grid.Column="1" Content="..." Margin="8,0,0,0"
+                        Style="{StaticResource SecondaryButton}" Padding="12,10" Click="BrowseOutputButton_Click" />
+            </Grid>
+
+            <TextBlock x:Name="LevelLabel" Text="Compression level" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+            <ComboBox x:Name="LevelCombo" Margin="0,0,0,16" />
+
+            <Button x:Name="CompressButton" Content="Compress PDF" Style="{StaticResource PrimaryButton}"
+                    HorizontalAlignment="Left" Click="CompressButton_Click" />
+            <TextBlock x:Name="ResultText" Margin="0,16,0,0" TextWrapping="Wrap"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+        </StackPanel>
+    </Border>
+</UserControl>

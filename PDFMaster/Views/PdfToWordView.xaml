@@ -1,0 +1,44 @@
+<UserControl x:Class="PDFMaster.Views.PdfToWordView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+    <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,8,0,0">
+        <StackPanel MaxWidth="760">
+            <TextBlock x:Name="HintText" TextWrapping="Wrap" FontSize="13" LineHeight="20"
+                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,16" />
+
+            <TextBlock x:Name="SourceLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+            <Grid Margin="0,0,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="SourcePathBox" IsReadOnly="True" />
+                <Button x:Name="BrowseSourceButton" Grid.Column="1" Content="..." Margin="8,0,0,0"
+                        Style="{StaticResource SecondaryButton}" Padding="12,10" Click="BrowseSourceButton_Click" />
+            </Grid>
+
+            <TextBlock x:Name="PageRangeLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+            <TextBox x:Name="PageRangeBox" Margin="0,0,0,14" Tag="1-" />
+
+            <TextBlock x:Name="OutputLabel" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+            <Grid Margin="0,0,0,14">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="OutputPathBox" />
+                <Button x:Name="BrowseOutputButton" Grid.Column="1" Content="..." Margin="8,0,0,0"
+                        Style="{StaticResource SecondaryButton}" Padding="12,10" Click="BrowseOutputButton_Click" />
+            </Grid>
+
+            <CheckBox x:Name="PreserveLayoutCheck" IsChecked="True" Margin="0,0,0,14" />
+
+            <Button x:Name="ConvertButton" Style="{StaticResource PrimaryButton}" HorizontalAlignment="Left"
+                    Click="ConvertButton_Click" />
+            <TextBlock x:Name="ResultText" Margin="0,12,0,0" TextWrapping="Wrap"
+                       Foreground="{DynamicResource TextSecondaryBrush}" />
+        </StackPanel>
+    </Border>
+</UserControl>

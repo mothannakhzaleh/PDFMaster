@@ -1,0 +1,169 @@
+<UserControl x:Class="PDFMaster.Views.PdfEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent"
+             Focusable="True"
+             PreviewKeyDown="PdfEditorView_PreviewKeyDown"
+             Loaded="PdfEditorView_Loaded">
+    <Border Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrush}"
+            BorderThickness="1" CornerRadius="14" Padding="16" Margin="0,8,0,0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" MinHeight="320" />
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="HintText" TextWrapping="Wrap" FontSize="13" LineHeight="20"
+                       Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12" />
+
+            <WrapPanel Grid.Row="1" Margin="0,0,0,12">
+                <Button x:Name="OpenButton" Content="Open PDF" Style="{StaticResource PrimaryButton}" Margin="0,0,8,8" Click="OpenButton_Click" />
+                <Button x:Name="NewPdfButton" Content="New PDF" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="NewPdfButton_Click" />
+                <Button x:Name="CloseButton" Content="Close PDF" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="CloseButton_Click" />
+                <Button x:Name="SaveButton" Content="Save PDF" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="SaveButton_Click" />
+                <Button x:Name="SaveAsButton" Content="Save as..." Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="SaveAsButton_Click" />
+                <Button x:Name="UndoButton" Content="Undo" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="UndoButton_Click" />
+                <Button x:Name="RedoButton" Content="Redo" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="RedoButton_Click" />
+                <Button x:Name="SelectToolButton" Content="Select" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="SelectToolButton_Click" />
+                <Button x:Name="EditTextToolButton" Content="Edit text" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="EditTextToolButton_Click" />
+                <Button x:Name="TextToolButton" Content="Add text" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="TextToolButton_Click" />
+                <Button x:Name="ImageToolButton" Content="Add image" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="ImageToolButton_Click" />
+                <Button x:Name="SignatureToolButton" Content="Signature" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="SignatureToolButton_Click" />
+                <Button x:Name="StampToolButton" Content="Stamp" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="StampToolButton_Click" />
+                <Button x:Name="RectangleToolButton" Content="Rectangle" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="RectangleToolButton_Click" />
+                <Button x:Name="EllipseToolButton" Content="Ellipse" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="EllipseToolButton_Click" />
+                <Button x:Name="LineToolButton" Content="Line" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="LineToolButton_Click" />
+                <Button x:Name="HighlightToolButton" Content="Highlight" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="HighlightToolButton_Click" />
+                <Button x:Name="WhiteoutToolButton" Content="Whiteout" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="WhiteoutToolButton_Click" />
+                <Button x:Name="DeleteSelectionButton" Content="Delete selection" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="DeleteSelectionButton_Click" />
+                <Button x:Name="RotateLeftButton" Content="Rotate left" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="RotateLeftButton_Click" />
+                <Button x:Name="RotateRightButton" Content="Rotate right" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="RotateRightButton_Click" />
+                <Button x:Name="AddPageButton" Content="Add page" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="AddPageButton_Click" />
+                <Button x:Name="DeletePageButton" Content="Delete page" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="DeletePageButton_Click" />
+                <Button x:Name="MoveUpButton" Content="Move up" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="MoveUpButton_Click" />
+                <Button x:Name="MoveDownButton" Content="Move down" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="MoveDownButton_Click" />
+                <Button x:Name="ZoomOutButton" Content="Zoom out" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="ZoomOutButton_Click" />
+                <Button x:Name="ZoomInButton" Content="Zoom in" Style="{StaticResource SecondaryButton}" Margin="0,0,8,8" Click="ZoomInButton_Click" />
+                <CheckBox x:Name="CompressOnSaveCheck" Content="Compress when saving" VerticalAlignment="Center" Margin="0,0,8,8" />
+            </WrapPanel>
+
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="220" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                    <TextBlock x:Name="PagesLabel" Text="Pages" FontWeight="SemiBold" Margin="0,0,0,8" />
+                    <TextBlock x:Name="PagesDragHint" Text="Drag pages to reorder" FontSize="11"
+                               Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" TextWrapping="Wrap" />
+                    <ListBox x:Name="PagesList" Height="320" SelectionChanged="PagesList_SelectionChanged"
+                             PreviewMouseLeftButtonDown="PagesList_PreviewMouseLeftButtonDown"
+                             PreviewMouseMove="PagesList_PreviewMouseMove"
+                             Drop="PagesList_Drop"
+                             DragOver="PagesList_DragOver"
+                             AllowDrop="True">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Thumbnail}" Width="36" Height="48" Margin="0,0,8,0" Stretch="Uniform" />
+                                    <TextBlock Text="{Binding PageNumber}" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+
+                <Border Grid.Column="1" Background="{DynamicResource SurfaceElevatedBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12">
+                    <Grid AllowDrop="True" Drop="DropArea_Drop" DragOver="DropArea_DragOver">
+                        <ScrollViewer x:Name="PreviewScroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="16">
+                                <Border x:Name="PreviewPageBackground" Background="White" Visibility="Collapsed" />
+                                <Image x:Name="PreviewImage" Stretch="None"
+                                       MouseLeftButtonDown="PreviewImage_MouseLeftButtonDown"
+                                       MouseMove="PreviewImage_MouseMove"
+                                       MouseLeftButtonUp="PreviewImage_MouseLeftButtonUp" />
+                                <Canvas x:Name="DrawOverlay" Background="Transparent"
+                                        MouseLeftButtonDown="DrawOverlay_MouseLeftButtonDown"
+                                        MouseMove="DrawOverlay_MouseMove"
+                                        MouseLeftButtonUp="DrawOverlay_MouseLeftButtonUp" />
+                                <TextBox x:Name="InlineTextEditor" Visibility="Collapsed" AcceptsReturn="True"
+                                         TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                         BorderBrush="{DynamicResource AccentBrush}" BorderThickness="2"
+                                         Background="{DynamicResource SurfaceBrush}"
+                                         Foreground="{DynamicResource TextPrimaryBrush}"
+                                         KeyDown="InlineTextEditor_KeyDown" LostFocus="InlineTextEditor_LostFocus" />
+                                <TextBlock x:Name="EmptyText" Text="No PDF loaded. Click Open PDF or drop a file here."
+                                           TextWrapping="Wrap" TextAlignment="Center" MaxWidth="420"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Column="2" Margin="12,0,0,0">
+                    <StackPanel x:Name="ContentEditPanel" Visibility="Collapsed" Margin="0,0,0,12">
+                        <TextBlock x:Name="ContentEditTitle" Text="Edit selection" FontWeight="SemiBold" Margin="0,0,0,8" />
+                        <TextBlock x:Name="BlockTextLabel" Text="Text" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                        <TextBox x:Name="BlockTextBox" AcceptsReturn="True" MinHeight="60" MaxHeight="120"
+                                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10"
+                                 TextChanged="BlockTextBox_TextChanged" />
+                        <TextBlock x:Name="BlockFontSizeLabel" Text="Font size" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                        <ComboBox x:Name="BlockFontSizeCombo" Margin="0,0,0,10" SelectionChanged="BlockFormat_Changed" />
+                        <TextBlock x:Name="BlockColorLabel" Text="Color" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,6" />
+                        <WrapPanel x:Name="BlockColorPanel" Margin="0,0,0,10" />
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <ToggleButton x:Name="BlockBoldToggle" Content="B" FontWeight="Bold" Width="36" Height="32" Margin="0,0,8,0"
+                                          Style="{StaticResource SecondaryToggleButton}" Click="BlockFormat_Changed" />
+                            <ToggleButton x:Name="BlockItalicToggle" Content="I" FontStyle="Italic" Width="36" Height="32"
+                                          Style="{StaticResource SecondaryToggleButton}" Click="BlockFormat_Changed" />
+                        </StackPanel>
+                        <TextBlock x:Name="ContentEditHint" TextWrapping="Wrap" FontSize="11"
+                                   Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,10" />
+                        <Button x:Name="DeleteBlockButton" Content="Delete selection" Style="{StaticResource SecondaryButton}"
+                                Click="DeleteBlockButton_Click" />
+                    </StackPanel>
+                    <TextBlock x:Name="FormFieldsLabel" Text="Form fields" FontWeight="SemiBold" Margin="0,0,0,8" />
+                    <TextBlock x:Name="FormFieldsHint" Text="No form fields in this PDF."
+                               Foreground="{DynamicResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,0,0,8" FontSize="12" />
+                    <TextBlock x:Name="PendingFormFieldHint" TextWrapping="Wrap" FontSize="12" Margin="0,0,0,8"
+                               Foreground="{DynamicResource AccentBrush}" Visibility="Collapsed" />
+                    <ListBox x:Name="FormFieldsList" Height="200" DisplayMemberPath="Name"
+                             SelectionChanged="FormFieldsList_SelectionChanged"
+                             MouseDoubleClick="FormFieldsList_MouseDoubleClick"
+                             ContextMenuOpening="FormFieldsList_ContextMenuOpening">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="FormFieldEditMenuItem" Header="Edit field"
+                                          Click="EditFormFieldButton_Click" />
+                                <MenuItem x:Name="FormFieldDeleteMenuItem" Header="Delete field"
+                                          Click="DeleteFormFieldButton_Click" />
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                    </ListBox>
+                    <Button x:Name="AddTextFieldButton" Content="Add text field" Style="{StaticResource SecondaryButton}"
+                            Margin="0,8,0,0" Click="AddTextFieldButton_Click" />
+                    <Button x:Name="AddComboFieldButton" Content="Add combo field" Style="{StaticResource SecondaryButton}"
+                            Margin="0,8,0,0" Click="AddComboFieldButton_Click" />
+                    <TextBlock x:Name="FormValueLabel" Text="Field value" Margin="0,10,0,6"
+                               Foreground="{DynamicResource TextSecondaryBrush}" />
+                    <TextBox x:Name="FormValueBox" KeyDown="FormValueBox_KeyDown" />
+                    <ComboBox x:Name="FormValueCombo" Visibility="Collapsed"
+                              DropDownClosed="FormValueCombo_DropDownClosed" />
+                    <StackPanel Margin="0,10,0,0">
+                        <Button x:Name="ApplyFormValueButton" Content="Apply value" Style="{StaticResource SecondaryButton}"
+                                Margin="0,0,0,8" Click="ApplyFormValueButton_Click" />
+                        <Button x:Name="EditFormFieldButton" Content="Edit field" Style="{StaticResource SecondaryButton}"
+                                Margin="0,0,0,8" Click="EditFormFieldButton_Click" />
+                        <Button x:Name="DeleteFormFieldButton" Content="Delete field" Style="{StaticResource SecondaryButton}"
+                                Click="DeleteFormFieldButton_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
