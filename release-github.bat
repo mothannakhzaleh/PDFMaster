@@ -135,17 +135,41 @@ if not exist "%ZIP%" (
 )
 
 echo.
-echo [3/5] Verifying GitHub release tag %TAG%...
-gh release view "%TAG%" >nul 2>&1
-if not errorlevel 1 (
-    echo ERROR: Release %TAG% already exists. Bump Version in PDFMaster.csproj or pass a new version:
-    echo   release-github.bat 0.2.1
+echo [3/5] Committing and pushing changes...
+git add -A >nul 2>&1
+git diff --cached --quiet >nul 2>&1
+if errorlevel 1 (
+    git commit -m "release: PDFMaster %TAG%" >nul
+    if errorlevel 1 (
+        echo ERROR: git commit failed.
+        pause
+        exit /b 1
+    )
+)
+git push origin main
+if errorlevel 1 (
+    echo ERROR: git push failed.
     pause
     exit /b 1
 )
 
 echo.
-echo [4/5] Writing release notes...
+echo [4/5] Tagging %TAG% and pushing to GitHub...
+git tag -l "%TAG%" | findstr /r "." >nul 2>&1
+if not errorlevel 1 (
+    echo Tag %TAG% already exists locally, deleting and re-creating...
+    git tag -d "%TAG%" >nul 2>&1
+)
+git tag "%TAG%" -m "Release %TAG%"
+git push origin "%TAG%" --force
+if errorlevel 1 (
+    echo ERROR: Failed to push tag %TAG%.
+    pause
+    exit /b 1
+)
+
+echo.
+echo [5/5] Writing release notes...
 if not exist "%NOTES_TEMPLATE%" (
     echo ERROR: Release notes template not found: %NOTES_TEMPLATE%
     pause
@@ -161,9 +185,34 @@ powershell -NoProfile -Command ^
 
 echo.
 echo [5/5] Creating GitHub release %TAG%...
-gh release create "%TAG%" "%ZIP%" --title "PDFMaster %TAG%" --notes-file "%NOTES%"
-if errorlevel 1 (
-    echo ERROR: GitHub release failed.
+
+REM Delete any leftover draft release for this tag
+gh release view "%TAG%" >nul 2>&1
+if not errorlevel 1 (
+    echo Deleting existing release %TAG%...
+    gh release delete "%TAG%" --yes >nul 2>&1
+)
+
+set "RELEASE_OK=0"
+for /L %%i in (1,1,3) do (
+    if "!RELEASE_OK!"=="0" (
+        echo   Attempt %%i of 3...
+        gh release create "%TAG%" "%ZIP%" --title "PDFMaster %TAG%" --notes-file "%NOTES%" >nul 2>&1
+        if not errorlevel 1 (
+            set "RELEASE_OK=1"
+        ) else (
+            if %%i LSS 3 (
+                echo   Failed, retrying in 5 seconds...
+                timeout /t 5 /nobreak >nul
+            )
+        )
+    )
+)
+
+if "!RELEASE_OK!"=="0" (
+    echo ERROR: GitHub release failed after 3 attempts.
+    echo The tag %TAG% has been pushed. You can create the release manually at:
+    echo   https://github.com/mothannakhzaleh/PDFMaster/releases/new?tag=%TAG%
     pause
     exit /b 1
 )
