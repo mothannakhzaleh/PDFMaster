@@ -23,6 +23,7 @@ PDFMaster/
 ├── start.bat                   # Build Release x64 + run app
 ├── build.bat                   # Build Release x64 only
 ├── publish-standalone.bat      # Self-contained publish → publish/
+├── release-github.bat          # Publish, GitHub release upload, cleanup publish/ + zip
 ├── setup-tools.bat             # Ghostscript setup instructions
 │
 └── PDFMaster/                  # Main WPF project (.NET 8)

@@ -178,7 +178,10 @@ public sealed class PdfDocumentService
 
             if (insertIndex >= doc.PageCount)
             {
-                doc.AddPage(reference);
+                var addedPage = doc.AddPage();
+                addedPage.Width = reference.Width;
+                addedPage.Height = reference.Height;
+                addedPage.Orientation = reference.Orientation;
                 insertIndex = doc.PageCount - 1;
                 return;
             }

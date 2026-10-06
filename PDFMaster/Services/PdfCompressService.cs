@@ -29,7 +29,9 @@ public sealed class PdfCompressService
 
         Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 
-        using var document = PdfReader.Open(inputPath, PdfDocumentOpenMode.Import);
+        var bytes = File.ReadAllBytes(inputPath);
+        using var stream = new MemoryStream(bytes);
+        using var document = PdfReader.Open(stream, PdfDocumentOpenMode.Import);
         using var output = new PdfDocument();
 
         for (var i = 0; i < document.PageCount; i++)

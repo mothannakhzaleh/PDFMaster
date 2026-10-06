@@ -22,6 +22,7 @@ build.bat           REM build Release x64
 start.bat           REM build + run
 setup-tools.bat     REM optional Ghostscript for max compression
 publish-standalone.bat
+release-github.bat  REM publish, GitHub release, clean local zip/publish
 ```
 
 Requires [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) on Windows x64.

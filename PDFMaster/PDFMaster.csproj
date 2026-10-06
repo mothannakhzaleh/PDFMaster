@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -7,7 +7,7 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>PDFMaster</AssemblyName>
     <RootNamespace>PDFMaster</RootNamespace>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>mothannakh</Authors>
     <Company>mothannakh</Company>
     <Product>PDFMaster</Product>
